@@ -1,0 +1,33 @@
+# Ignore node_modules, Python cache, and OS files
+node_modules/
+__pycache__/
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore build and log files
+*.log
+*.out
+*.tmp
+*.swp
+
+# Ignore Docker and VS Code files
+*.tar
+*.img
+*.pid
+.vscode/
+
+# Ignore backup and export images
+/backups/
+images/
+
+# Ignore environment and secret files
+.env
+.env.*
+secrets/
+
+# Ignore Mermaid and exported diagram files
+*.mmd
+*.svg
+*.png

@@ -37,8 +37,19 @@ The main goal is to provide a lightweight, production-ready NGINX image that can
 # Build for amd64 and push
 docker buildx build --platform linux/amd64 -t <registry_url>:<tag> . --push
 ```
+## Architecture Diagram
 
-#### 4. Example Docker Compose/Swarm Service
+Below is the high-level architecture for the NGINX + NFS Docker Swarm setup, rendered as a Mermaid diagram:
+
+![Architecture Diagram](images/architecture-diagram.png)
+
+---
+
+## NGINX HTTPS Flow
+
+![NGINX HTTPS Flow](images/nginx-https-flow.png)
+
+## Example Docker Compose/Swarm Service
 ```yaml
 services:
 	nginx:
@@ -65,18 +76,20 @@ networks:
 		external: true
 ```
 
-### Configuration
+
+
+## Configuration
 - **nginx.conf**: Adjust the `root` directive to point to the NFS mount location (e.g., `/usr/share/nginx/html`).
 - **NFS Volume**: Ensure your NFS server is accessible from all nodes running the container.
 - **Permissions**: The NGINX user inside the container must have read access to the NFS share.
 
-### Troubleshooting
+## Troubleshooting
 - If the build fails, check that `nginx.conf` is present and valid.
 - If NGINX cannot serve files, verify the NFS mount is working and permissions are correct.
 - Use `docker logs <container>` to view NGINX error logs.
 - For cross-platform issues, ensure you are building with the correct platform flag (`--platform linux/amd64`).
 
-### Environment Variables and Configuration Options
+## Environment Variables and Configuration Options
 
 You can customize the behavior of your NGINX containers and stack using environment variables and configuration options. Common examples include:
 
@@ -101,7 +114,7 @@ You can customize the behavior of your NGINX containers and stack using environm
 
 Refer to your orchestrator’s documentation and the official NGINX image docs for more environment variables and configuration options.
 
-### Testing and Validation
+## Testing and Validation
 
 After deploying your stack, it’s important to verify that everything is working as expected:
 
@@ -186,20 +199,6 @@ Security is critical when exposing NGINX and NFS in production environments. Bel
 - Use network segmentation to isolate critical services.
 
 For more information, consult the [NGINX Security Guide](https://docs.nginx.com/nginx/admin-guide/security-controls/) and your operating system’s security best practices.
-
-
-## Architecture Diagram
-
-Below is the high-level architecture for the NGINX + NFS Docker Swarm setup, rendered as a Mermaid diagram:
-
-![Architecture Diagram](images/architecture-diagram.png)
-
-
----
-
-## NGINX HTTPS Flow
-
-![NGINX HTTPS Flow](images/nginx-https-flow.png)
 
 ---
 ### References

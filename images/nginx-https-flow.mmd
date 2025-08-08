@@ -1,0 +1,8 @@
+sequenceDiagram
+	participant User
+	participant NGINX
+	participant NFS
+	User->>NGINX: HTTPS Request (GET /file)
+	NGINX->>NFS: Read file from /var/nfs
+	NFS-->>NGINX: File data
+	NGINX-->>User: HTTPS Response (file data)

@@ -1,0 +1,15 @@
+flowchart TD
+	Users([Users])
+	LB[Swarm Load Balancer]
+	NGINX1["Swarm Node 1<br/>(Photon OS)<br/>NGINX Container"]
+	NGINX2["Swarm Node 2<br/>(Photon OS)<br/>NGINX Container"]
+	NGINXN["Swarm Node N<br/>(Photon OS)<br/>NGINX Container"]
+	NFS["NFS Server<br/>(Photon OS)<br/>/var/nfs"]
+
+	Users --> LB
+	LB --> NGINX1
+	LB --> NGINX2
+	LB --> NGINXN
+	NGINX1 -- "NFS over network" --> NFS
+	NGINX2 -- "NFS over network" --> NFS
+	NGINXN -- "NFS over network" --> NFS

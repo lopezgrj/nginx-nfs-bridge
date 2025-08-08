@@ -1,0 +1,15 @@
+# Ignore everything except files needed for the image
+!Dockerfile
+!nginx.conf
+
+# Ignore scripts and docs
+build.sh
+push-image.sh
+README.md
+*.md
+*.sh
+
+# Ignore version control and OS files
+.git
+.gitignore
+.DS_Store

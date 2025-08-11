@@ -37,6 +37,25 @@ The main goal is to provide a lightweight, production-ready NGINX image that can
 # Build for amd64 and push
 docker buildx build --platform linux/amd64 -t <registry_url>:<tag> . --push
 ```
+
+### Configuration
+- **nginx.conf**: This file controls how NGINX serves static content. The image expects your static files (HTML, CSS, JS, etc.) to be available at `/usr/share/nginx/html` inside the container. This path should be mounted from your NFS server.
+	- Example root directive in `nginx.conf`:
+		```nginx
+		server {
+				listen 80;
+				server_name _;
+				root /var/nfs/nginx/html;
+				index index.html;
+				location / {
+						try_files $uri $uri/ =404;
+				}
+		}
+		```
+	- On your NFS server, the exported directory (e.g., `/srv/nfs` or `/var/nfs`) should contain the static files you want to serve. In your Docker Compose or Swarm stack, mount this NFS export to `/usr/share/nginx/html` in the container.
+- **NFS Volume**: Ensure your NFS server is accessible from all nodes running the container, and the exported directory contains your website or static assets.
+- **Permissions**: The NGINX user inside the container must have read access to the NFS share.
+
 ## Architecture Diagram
 
 Below is the high-level architecture for the NGINX + NFS Docker Swarm setup, rendered as a Mermaid diagram:
@@ -76,12 +95,6 @@ networks:
 		external: true
 ```
 
-
-
-## Configuration
-- **nginx.conf**: Adjust the `root` directive to point to the NFS mount location (e.g., `/usr/share/nginx/html`).
-- **NFS Volume**: Ensure your NFS server is accessible from all nodes running the container.
-- **Permissions**: The NGINX user inside the container must have read access to the NFS share.
 
 ## Troubleshooting
 - If the build fails, check that `nginx.conf` is present and valid.

@@ -5,9 +5,8 @@
 
 set -euo pipefail
 
-
-# WARNING: Make sure you are logged in to Docker Hub or your target registry before running this script.
-# You can log in using: docker login
+echo WARNING: Make sure you are logged in to Docker Hub or your target registry before running this script.
+echo You can log in using: docker login
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <registry_url> [image_tag]"

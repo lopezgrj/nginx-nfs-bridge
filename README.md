@@ -74,7 +74,7 @@ services:
 	nginx:
 		image: <registry_url>:<tag>
 		volumes:
-			- nfsdata:/usr/share/nginx/html:ro
+			- nfsdata:/var/nfs/nginx/html:ro
 		networks:
 			- traefik-net
 		deploy:
@@ -89,7 +89,7 @@ volumes:
 		driver_opts:
 			type: "nfs"
 			o: "addr=192.168.1.100,nolock,soft,rw"
-			device: ":/srv/nfs"
+			device: ":/var/nfs/nginx/html"
 networks:
 	traefik-net:
 		external: true

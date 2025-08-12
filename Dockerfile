@@ -1,5 +1,6 @@
 FROM nginx:alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 LABEL org.opencontainers.image.title="nginx-nfs"
 LABEL org.opencontainers.image.description="Minimal NGINX image for NFS-backed static content in Swarm/K8s"
